@@ -8,9 +8,11 @@ namespace GridSearchApp.Services
     {
         public IQueryable<Customer>? Customers { get; private set; }
 
+        public List<Customer> CustomersList { get; private set; }
+
         private void GetCustomers()
         {
-            var customersList = new List<Customer>();
+            CustomersList = new List<Customer>();
 
             using(var connection = GetConnection())
             {
@@ -24,7 +26,7 @@ namespace GridSearchApp.Services
                     var reader = command.ExecuteReader();
                     while(reader.Read())
                     {
-                        customersList.Add(new Customer
+                        CustomersList.Add(new Customer
                         {
                             FirstName = (string)reader[0],
                             LastName = (string)reader[1],
@@ -34,7 +36,7 @@ namespace GridSearchApp.Services
                         });
                     }
 
-                    Customers = customersList.AsQueryable();
+                    Customers = CustomersList.AsQueryable();
                 }
             }
         }
