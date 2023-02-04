@@ -8,7 +8,6 @@ namespace GridSearchApp.Services
     {
         public IQueryable<Customer>? Customers { get; private set; }
 
-
         private void GetCustomers()
         {
             var customersList = new List<Customer>();
