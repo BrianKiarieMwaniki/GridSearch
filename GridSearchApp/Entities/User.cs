@@ -32,5 +32,7 @@ namespace GridSearchApp.Entities
 
         public string? Username { get; set; }
         public string? Gender { get; set; }
+
+        public string? Fullname { get => $"{Firstname} {Lastname}"; }
     }
 }

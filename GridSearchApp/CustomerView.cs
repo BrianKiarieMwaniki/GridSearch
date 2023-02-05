@@ -1,5 +1,6 @@
 using GridSearchApp.Entities;
 using GridSearchApp.Services;
+using GridSearchApp.Utilities;
 
 namespace GridSearchApp
 {
@@ -18,7 +19,7 @@ namespace GridSearchApp
             customerService = new CustomerService();
 
             LoadData();
-            HideGridColumns();
+            GridViewUtil.HideGridColumns(this.dgvCustomers, nameof(Customer.FullName));
         }
 
         private void LoadData()
@@ -52,11 +53,6 @@ namespace GridSearchApp
             if (string.IsNullOrWhiteSpace(searchFilter)) return;
 
             dgvCustomers.DataSource = GetCustomers().ToList();
-        }
-
-        private void HideGridColumns()
-        {
-            this.dgvCustomers.Columns[nameof(Customer.FullName)].Visible = false;
         }
     }
 }
