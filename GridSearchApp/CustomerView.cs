@@ -3,7 +3,7 @@ using GridSearchApp.Services;
 
 namespace GridSearchApp
 {
-    public partial class Form1 : Form
+    public partial class CustomerView : Form
     {
         private CustomerService customerService;
 
@@ -11,7 +11,7 @@ namespace GridSearchApp
 
         private string? searchFilter => txtSearchBar.Text;
 
-        public Form1()
+        public CustomerView()
         {
             InitializeComponent();
 
