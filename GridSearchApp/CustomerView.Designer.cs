@@ -1,6 +1,6 @@
 ﻿namespace GridSearchApp
 {
-    partial class Form1
+    partial class CustomerView
     {
         /// <summary>
         ///  Required designer variable.

@@ -1,9 +1,10 @@
 using GridSearchApp.Entities;
 using GridSearchApp.Services;
+using GridSearchApp.Utilities;
 
 namespace GridSearchApp
 {
-    public partial class Form1 : Form
+    public partial class CustomerView : Form
     {
         private CustomerService customerService;
 
@@ -11,14 +12,14 @@ namespace GridSearchApp
 
         private string? searchFilter => txtSearchBar.Text;
 
-        public Form1()
+        public CustomerView()
         {
             InitializeComponent();
 
             customerService = new CustomerService();
 
             LoadData();
-            HideGridColumns();
+            GridViewUtil.HideGridColumns(this.dgvCustomers, nameof(Customer.FullName));
         }
 
         private void LoadData()
@@ -52,11 +53,6 @@ namespace GridSearchApp
             if (string.IsNullOrWhiteSpace(searchFilter)) return;
 
             dgvCustomers.DataSource = GetCustomers().ToList();
-        }
-
-        private void HideGridColumns()
-        {
-            this.dgvCustomers.Columns[nameof(Customer.FullName)].Visible = false;
         }
     }
 }
