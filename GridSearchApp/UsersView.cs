@@ -15,10 +15,13 @@ namespace GridSearchApp
 {
     public partial class UsersView : Form
     {
-
         private UserService userService;
 
         private IQueryable<User> users;
+
+        private string? searchFilter => txtSearchBar.Text;
+
+        private string? recordsCount => dgvUsers.Rows.Count.ToString();
 
         public UsersView()
         {
@@ -27,7 +30,10 @@ namespace GridSearchApp
             userService = new UserService();
 
             LoadData();
+
             GridViewUtil.HideGridColumns(this.dgvUsers, nameof(User.Fullname));
+
+            this.lblRecords.Text = $"Record: {recordsCount}";
         }
 
         private void LoadData()
@@ -36,8 +42,18 @@ namespace GridSearchApp
             if(hasData && userService.Users is not null)
             {
                 users = userService.Users.OrderBy(u => u.Firstname);
-                dgvUsers.DataSource = users.ToList();
+                dgvUsers.DataSource = users.ToList();               
+
             }
+        }
+
+        private void txtSearchBar_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(searchFilter)) return;
+
+            dgvUsers.DataSource = userService.SearchUsers(this.users, searchFilter).ToList();
+
+            this.lblRecords.Text = $"Record: {recordsCount}";
         }
     }
 }

@@ -51,5 +51,20 @@ namespace GridSearchApp.Services
 
             return true;
         }
+
+        public IQueryable<User> SearchUsers(IQueryable<User> users,string searchFilter)
+        {
+            if (users is null) return null;
+
+            if (string.IsNullOrWhiteSpace(searchFilter)) return null;
+
+            var filteredUsers = users.Where(c => c.Firstname.Contains(searchFilter, StringComparison.OrdinalIgnoreCase) ||
+                                           c.Lastname.Contains(searchFilter, StringComparison.OrdinalIgnoreCase) ||
+                                            c.Fullname.Contains(searchFilter, StringComparison.OrdinalIgnoreCase) ||
+                                            c.Gender.Contains(searchFilter, StringComparison.OrdinalIgnoreCase) ||
+                                            c.Username.Contains(searchFilter, StringComparison.OrdinalIgnoreCase));
+
+            return filteredUsers.OrderBy(u => u.Firstname);
+        }
     }
 }
