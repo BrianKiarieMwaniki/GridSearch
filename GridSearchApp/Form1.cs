@@ -7,7 +7,7 @@ namespace GridSearchApp
     {
         private CustomerService customerService;
 
-        private IQueryable<Customer> Customers;
+        private IQueryable<Customer> customers;
 
         private string? searchFilter => txtSearchBar.Text;
 
@@ -18,6 +18,7 @@ namespace GridSearchApp
             customerService = new CustomerService();
 
             LoadData();
+            HideGridColumns();
         }
 
         private void LoadData()
@@ -25,23 +26,25 @@ namespace GridSearchApp
             var hasData = customerService.LoadData();
             if(hasData && customerService.Customers is not null)
             {
-                Customers = customerService.Customers;
-                dgvCustomers.DataSource = Customers.ToList();
+                customers = customerService.Customers.OrderBy(c => c.FirstName);
+                dgvCustomers.DataSource = customers.ToList();
+
                
             }
         }
 
         private IQueryable<Customer> GetCustomers()
         {
-            if (Customers is null) return null;
+            if (customers is null) return null;
 
             if (string.IsNullOrWhiteSpace(searchFilter)) return null;
 
-            var filteredCustomers = Customers.Where(c => c.FirstName.Contains(searchFilter, StringComparison.OrdinalIgnoreCase) ||
+            var filteredCustomers = customers.Where(c => c.FirstName.Contains(searchFilter, StringComparison.OrdinalIgnoreCase) ||
+            c.FullName.Contains(searchFilter, StringComparison.OrdinalIgnoreCase) ||
             c.LastName.Contains(searchFilter, StringComparison.OrdinalIgnoreCase) || c.City.Contains(searchFilter, StringComparison.OrdinalIgnoreCase) ||
             c.Country.Contains(searchFilter, StringComparison.OrdinalIgnoreCase) || c.Phone.Contains(searchFilter, StringComparison.OrdinalIgnoreCase));
 
-            return filteredCustomers;
+            return filteredCustomers.OrderBy(c => c.FirstName);
         }
 
         private void txtSearchBar_TextChanged(object sender, EventArgs e)
@@ -49,6 +52,11 @@ namespace GridSearchApp
             if (string.IsNullOrWhiteSpace(searchFilter)) return;
 
             dgvCustomers.DataSource = GetCustomers().ToList();
+        }
+
+        private void HideGridColumns()
+        {
+            this.dgvCustomers.Columns[nameof(Customer.FullName)].Visible = false;
         }
     }
 }

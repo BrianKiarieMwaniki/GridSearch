@@ -35,10 +35,12 @@
             // 
             // dgvCustomers
             // 
+            this.dgvCustomers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvCustomers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCustomers.Location = new System.Drawing.Point(12, 62);
             this.dgvCustomers.Name = "dgvCustomers";
             this.dgvCustomers.RowTemplate.Height = 25;
+            this.dgvCustomers.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dgvCustomers.Size = new System.Drawing.Size(776, 376);
             this.dgvCustomers.TabIndex = 0;
             // 
@@ -46,7 +48,7 @@
             // 
             this.txtSearchBar.Location = new System.Drawing.Point(12, 25);
             this.txtSearchBar.Name = "txtSearchBar";
-            this.txtSearchBar.Size = new System.Drawing.Size(258, 23);
+            this.txtSearchBar.Size = new System.Drawing.Size(172, 23);
             this.txtSearchBar.TabIndex = 1;
             this.txtSearchBar.TextChanged += new System.EventHandler(this.txtSearchBar_TextChanged);
             // 
